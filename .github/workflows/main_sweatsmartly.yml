@@ -3,7 +3,7 @@ name: Deploy Next.js app to Azure Web App - SweatSmartly
 on:
   push:
     branches:
-      - main
+      - main  # Of je specifieke branch
   workflow_dispatch:
 
 jobs:
@@ -17,7 +17,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'  # Of een andere versie indien nodig
+          node-version: '22'  # Jullie Azure App Service draait op Node.js 22
 
       - name: Install dependencies
         run: npm install
@@ -28,7 +28,8 @@ jobs:
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'SweatSmartly'
+          app-name: 'SweatSmartly'  # Zorg dat deze exact overeenkomt met de naam in Azure
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
           package: .
+
