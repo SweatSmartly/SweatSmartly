@@ -3,7 +3,7 @@ name: Deploy Next.js app to Azure Web App - SweatSmartly
 on:
   push:
     branches:
-      - main  # Of je specifieke branch
+      - main  # Of je specifieke branches
   workflow_dispatch:
 
 jobs:
