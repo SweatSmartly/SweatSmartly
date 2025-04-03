@@ -50,7 +50,7 @@ export default function FullBodyFitnessCTA() {
         {/* Rode vlak */}
         <Box
           w={{ base: '100%', md: '50%' }}
-          h={{ base: '100vh', md: 'auto' }} // 👈 100vh op mobiel
+          h={{ base: '100vh', md: 'auto' }} 
           bg="red.500"
           color="white"
           display="flex"
@@ -62,17 +62,17 @@ export default function FullBodyFitnessCTA() {
           zIndex={1}
           clipPath={{
             base: 'none',
-            md: 'polygon(0 0, 80% 0, 100% 100%, 0% 100%)', // schuine rechterzijde
+            md: 'polygon(0 0, 80% 0, 100% 100%, 0% 100%)', 
           }}
           textAlign="left"
         >
               <VStack
-                align={{ base: 'center', md: 'start' }} // 👈 centreren op mobiel, links op desktop
+                align={{ base: 'center', md: 'start' }}
                 spacing={6}
                 maxW="400px"
                 position="relative"
                 zIndex={2}
-                textAlign={{ base: 'center', md: 'left' }} // 👈 optioneel: ook tekst centreren op mobiel
+                textAlign={{ base: 'center', md: 'left' }}
               >
             <Heading fontSize="5xl" fontWeight="bold">
               SweatSmartly
@@ -87,7 +87,7 @@ export default function FullBodyFitnessCTA() {
               _hover={{ bg: 'gray.700' }}
               size="lg"
               onClick={onOpen}
-              alignSelf={{ base: 'center', md: 'start' }} // 👈 knop zelf centreren op mobiel
+              alignSelf={{ base: 'center', md: 'start' }}
             >
               MELD JE NU AAN
             </Button>
