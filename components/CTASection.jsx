@@ -39,7 +39,7 @@ export default function FullBodyFitnessCTA() {
             width={1600}
             height={900}
             style={{
-              objectFit: 'contain',         // volledige afbeelding tonen
+              objectFit: 'contain',         
               objectPosition: 'center right',
               width: '100%',
               height: '100%',

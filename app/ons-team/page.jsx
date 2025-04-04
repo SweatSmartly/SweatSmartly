@@ -35,6 +35,7 @@ const teamMembers = [
 
 export default function TeamPage() {
     return (
+      <>
         <Box>
         <Box bgImage={"url('/hero-image.png')"} bgSize="cover" bgPosition="center" minHeight="50vh" roundedBottom="xl" textColor={"white"} py={10} px={4} textAlign="center">
           <Heading as="h1" size="2xl" mt={20} mb={4}>
@@ -83,6 +84,7 @@ export default function TeamPage() {
           </SimpleGrid>
         </Box>
       </Box>
+      </>
       );
   }
   
