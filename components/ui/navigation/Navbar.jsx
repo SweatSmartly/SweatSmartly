@@ -48,7 +48,7 @@ const Navbar = () => {
             color="white"
             ml={2}
           >
-            SweatSmartlie
+            SweatSmartly
           </Text>
         </Flex>
 
