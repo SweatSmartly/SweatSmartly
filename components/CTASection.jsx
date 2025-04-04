@@ -78,7 +78,7 @@ export default function FullBodyFitnessCTA() {
               SweatSmartly
             </Heading>
             <Text fontSize="lg">
-              Vind jij een personal training ook te duur?!!!
+              Vind jij een personal training ook te duur?
               Meld je dan nu aan bij SweatSmartly en betaal per oefening!
             </Text>
             <Button
