@@ -1,4 +1,4 @@
-name: Build and deploy Next.js app to Azure Web App - SweatSmartly
+name: Deploy Next.js app to Azure Web App - SweatSmartly
 
 on:
   push:
@@ -11,48 +11,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Checkout the code
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2. Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '22' # Zorg dat dit overeenkomt met je Azure App Service instellingen
+          node-version: '18'  # Of een andere versie indien nodig
 
-      # 3. Cache node_modules voor snellere builds
-      - name: Cache Node.js modules
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      # 4. Install dependencies
       - name: Install dependencies
         run: npm install
 
-      # 5. Build Next.js app
-      - name: Build with Next.js standalone output
+      - name: Build Next.js app
         run: npm run build
 
-      # 6. Prepare files for Azure deployment
-      - name: Copy files for Azure deployment
-        run: |
-          mkdir -p deploy/.next
-          cp -r .next/standalone/* deploy/
-          if [ -d ".next/static" ]; then cp -r .next/static deploy/.next/static; else echo "Geen static folder gevonden"; fi
-          cp -r public/ deploy/public
-          cp next.config.mjs deploy/
-          cp package.json deploy/
-
-      # 7. Deploy to Azure
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'SweatSmartly'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
-          package: ./deploy
+          package: .
