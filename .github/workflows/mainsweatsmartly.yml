@@ -1,34 +1,52 @@
 name: Deploy Next.js app to Azure Web App - SweatSmartly
- 
- on:
-   push:
-     branches:
-       - main
-   workflow_dispatch:
- 
- jobs:
-   build-and-deploy:
-     runs-on: ubuntu-latest
- 
-     steps:
-       - name: Checkout code
-         uses: actions/checkout@v4
- 
-       - name: Setup Node.js
-         uses: actions/setup-node@v3
-         with:
-           node-version: '18'  # Of een andere versie indien nodig
- 
-       - name: Install dependencies
-         run: npm install
- 
-       - name: Build Next.js app
-         run: npm run build
- 
-       - name: Deploy to Azure Web App
-         uses: azure/webapps-deploy@v3
-         with:
-           app-name: 'SweatSmartly'
-           slot-name: 'Production'
-           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
-           package: .
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'  # Cache automatisch je node_modules
+
+      - name: Install dependencies
+        run: npm ci  # 'ci' is véél sneller dan 'install' voor productie
+
+      - name: Build Next.js app
+        env:
+          NODE_ENV: production
+        run: npm run build
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nextjs-build
+          path: |
+            .next
+            public
+            package.json
+            next.config.js
+
+      - name: Download build artifact (for deployment)
+        uses: actions/download-artifact@v4
+        with:
+          name: nextjs-build
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: 'SweatSmartly'
+          slot-name: 'Production'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
+          package: .
