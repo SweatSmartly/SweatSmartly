@@ -1,51 +1,34 @@
 name: Deploy Next.js app to Azure Web App - SweatSmartly
-
-on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
-
-jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-
-      - name: Cache node_modules
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Build app
-        run: npm run build
-
-      - name: Prepare deployment package
-        run: |
-          mkdir -p deploy/.next
-          cp -r .next/standalone/* deploy/
-          if [ -d ".next/static" ]; then cp -r .next/static deploy/.next/static; else echo "Geen static folder gevonden"; fi
-          cp -r public/ deploy/public
-          cp package.json deploy/
-          cp next.config.mjs deploy/
-
-      - name: Deploy to Azure Web App
-        uses: azure/webapps-deploy@v3
-        with:
-          app-name: 'SweatSmartly'
-          slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
-          package: ./deploy  # <<== Alleen kleine, lichte folder
+ 
+ on:
+   push:
+     branches:
+       - main
+   workflow_dispatch:
+ 
+ jobs:
+   build-and-deploy:
+     runs-on: ubuntu-latest
+ 
+     steps:
+       - name: Checkout code
+         uses: actions/checkout@v4
+ 
+       - name: Setup Node.js
+         uses: actions/setup-node@v3
+         with:
+           node-version: '18'  # Of een andere versie indien nodig
+ 
+       - name: Install dependencies
+         run: npm install
+ 
+       - name: Build Next.js app
+         run: npm run build
+ 
+       - name: Deploy to Azure Web App
+         uses: azure/webapps-deploy@v3
+         with:
+           app-name: 'SweatSmartly'
+           slot-name: 'Production'
+           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
+           package: .
