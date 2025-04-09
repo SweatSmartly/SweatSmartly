@@ -1,5 +1,5 @@
 'use client';
-
+import React from 'react';
 import { useState } from 'react';
 import {
   Box,
@@ -39,11 +39,9 @@ export default function VideoUpload() {
     setIsUploading(true);
   
     try {
-      // 1. Haal de upload-URL met SAS-token op
       const sasRes = await fetch('/api/sas');
       const { uploadUrl, blobName } = await sasRes.json();
   
-      // 2. Upload het bestand rechtstreeks naar Azure Blob Storage
       const putRes = await fetch(uploadUrl, {
         method: 'PUT',
         headers: {
@@ -74,7 +72,6 @@ export default function VideoUpload() {
       setIsUploading(false);
     }
   };
-  
 
   return (
     <Box p={6} borderWidth="1px" borderRadius="xl" boxShadow="md" maxW="md" mx="auto">
@@ -82,6 +79,7 @@ export default function VideoUpload() {
         <Text fontSize="lg" fontWeight="bold">Upload een video</Text>
 
         <Input
+          aria-label="Bestand uploaden"  // <-- ✨ Toegevoegd!
           type="file"
           accept="video/*"
           onChange={(e) => setFile(e.target.files[0])}
