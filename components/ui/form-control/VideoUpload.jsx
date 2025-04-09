@@ -21,56 +21,60 @@ export default function VideoUpload() {
       showToast({
         title: 'Geen bestand geselecteerd',
         status: 'warning',
+        position: 'bottom-right',
       });
       return;
     }
-
+  
     if (file.size > 150 * 1024 * 1024) {
       showToast({
         title: 'Bestand is te groot',
         description: 'Maximaal 150MB toegestaan',
         status: 'error',
+        position: 'bottom-right',
       });
       return;
     }
-
-    const formData = new FormData();
-    formData.append('video', file);
-
+  
     setIsUploading(true);
-
+  
     try {
-      const res = await fetch('/api/upload', {
-        method: 'POST',
-        body: formData,
+      // 1. Haal de upload-URL met SAS-token op
+      const sasRes = await fetch('/api/sas');
+      const { uploadUrl, blobName } = await sasRes.json();
+  
+      // 2. Upload het bestand rechtstreeks naar Azure Blob Storage
+      const putRes = await fetch(uploadUrl, {
+        method: 'PUT',
+        headers: {
+          'x-ms-blob-type': 'BlockBlob',
+          'Content-Type': file.type,
+        },
+        body: file,
       });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        showToast({
-          title: 'Upload gelukt',
-          description: `Bestand: ${data.filename}`,
-          status: 'success',
-        });
-        setFile(null);
-      } else {
-        showToast({
-          title: 'Upload mislukt',
-          description: data.error || 'Er is iets misgegaan',
-          status: 'error',
-        });
-      }
+  
+      if (!putRes.ok) throw new Error("Azure upload is mislukt");
+  
+      showToast({
+        title: 'Upload gelukt',
+        description: `Bestand: ${blobName}`,
+        status: 'success',
+        position: 'bottom-right',
+      });
+  
+      setFile(null);
     } catch (error) {
       showToast({
-        title: 'Netwerkfout',
+        title: 'Upload mislukt',
         description: error.message,
         status: 'error',
+        position: 'bottom-right',
       });
     } finally {
       setIsUploading(false);
     }
   };
+  
 
   return (
     <Box p={6} borderWidth="1px" borderRadius="xl" boxShadow="md" maxW="md" mx="auto">

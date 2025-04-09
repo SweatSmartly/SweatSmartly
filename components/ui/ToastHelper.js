@@ -1,4 +1,3 @@
-// components/ui/ToastHelper.js
 import { useToast } from '@chakra-ui/react';
 
 export const useAppToast = () => {
@@ -7,11 +6,15 @@ export const useAppToast = () => {
   const showToast = ({
     title,
     description = '',
-    status = 'info', // 'success' | 'error' | 'warning' | 'info'
+    status = 'info',
     duration = 4000,
-    position = 'bottom-right',
+    position,
     isClosable = true,
   }) => {
+    if (!position) {
+      throw new Error('Toast position is required.');
+    }
+
     toast({
       title,
       description,
