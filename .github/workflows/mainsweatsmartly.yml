@@ -1,4 +1,4 @@
-name: Deploy Next.js app to Azure Web App - SweatSmartly
+name: Build, Test and Deploy Next.js App - SweatSmartly
 
 on:
   push:
@@ -7,27 +7,40 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  build-test-deploy:
     runs-on: ubuntu-latest
 
     steps:
+      # 1. Checkout repository
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # 2. Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
-          cache: 'npm'  # Cache automatisch je node_modules
+          cache: 'npm'
 
+      # 3. Install dependencies
       - name: Install dependencies
-        run: npm ci  # 'ci' is véél sneller dan 'install' voor productie
+        run: npm ci
 
+      # 4. Run Jest unit/component tests
+      - name: Run Jest tests
+        run: npm run test
+
+      # 5. Build Next.js production build
       - name: Build Next.js app
         env:
           NODE_ENV: production
         run: npm run build
 
+      # 6. Run Cypress E2E tests
+      - name: Run Cypress E2E tests
+        run: npm run cy:run
+
+      # 7. Upload build artifact
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
@@ -38,11 +51,13 @@ jobs:
             package.json
             next.config.js
 
-      - name: Download build artifact (for deployment)
+      # 8. Download build artifact (for deployment)
+      - name: Download build artifact
         uses: actions/download-artifact@v4
         with:
           name: nextjs-build
 
+      # 9. Deploy to Azure Web App
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
