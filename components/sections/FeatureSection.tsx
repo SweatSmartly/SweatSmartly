@@ -53,7 +53,7 @@ const FeaturesSection: FC = () => {
       pb={12}
       color="white"
     >
-      <Heading
+    <Heading
         as="h2"
         fontSize={{ base: '3xl', md: '6xl' }}
         fontWeight="extrabold"
@@ -62,10 +62,15 @@ const FeaturesSection: FC = () => {
         maxW="2xl"
         textAlign={{ base: 'center', md: 'left' }}
         mx={{ base: 'auto', md: 0 }}
-      >
-        De features die<br />
-        wij bieden
-      </Heading>
+        lineHeight="1.2" // belangrijk
+        >
+        <Box as="span" display="block">
+            De features die
+        </Box>
+        <Box as="span" display="block">
+            wij bieden
+        </Box>
+    </Heading>
 
       <VStack
         alignItems="start"           // was `align`

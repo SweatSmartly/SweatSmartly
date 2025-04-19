@@ -33,45 +33,49 @@ const NewsletterModal: FC<NewsletterModalProps> = ({ open, onClose }) => {
         <Dialog.Backdrop />
 
         <Dialog.Positioner>
-          <Dialog.Content>
-            <Dialog.Header>Meld je aan voor onze nieuwsbrief</Dialog.Header>
+        <Dialog.Content bg="white" color="black">
+            <Dialog.Header>
+                <Text fontWeight="bold" fontSize="xl">
+                    Meld je aan voor onze nieuwsbrief
+                </Text>
+            </Dialog.Header>
 
             <Dialog.CloseTrigger asChild>
-              <CloseButton
+                <CloseButton
                 aria-label="Sluit modal"
                 position="absolute"
                 top={3}
                 right={3}
                 size="sm"
-              />
+                />
             </Dialog.CloseTrigger>
 
             <Dialog.Body>
-              <Text mb={6} fontSize="sm">
+                <Text mb={6} fontSize="sm">
                 Helaas heeft de applicatie nog geen volledige functionaliteit, maar
                 wil je wel als eerste testen? Meld je aan voor onze nieuwsbrief
                 en ontvang als eerste de laatste updates!
-              </Text>
+                </Text>
 
-              <VStack gap={4} align="stretch">
+                <VStack gap={4} align="stretch">
                 <Field.Root>
-                  <Field.Label>Naam</Field.Label>
-                  <Input placeholder="Je naam" />
+                    <Field.Label>Naam</Field.Label>
+                    <Input placeholder="Je naam" />
                 </Field.Root>
 
                 <Field.Root>
-                  <Field.Label>Emailadres</Field.Label>
-                  <Input type="email" placeholder="jij@example.com" />
+                    <Field.Label>Emailadres</Field.Label>
+                    <Input type="email" placeholder="jij@example.com" />
                 </Field.Root>
-              </VStack>
+                </VStack>
             </Dialog.Body>
 
             <Dialog.Footer>
-              <Button colorPalette="red" onClick={onClose}>
+                <Button colorPalette="red" onClick={onClose}>
                 Aanmelden
-              </Button>
+                </Button>
             </Dialog.Footer>
-          </Dialog.Content>
+            </Dialog.Content>
         </Dialog.Positioner>
       </Portal>
     </Dialog.Root>

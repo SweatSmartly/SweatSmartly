@@ -55,15 +55,19 @@ const AboutSection = () => {
 
       {/* Tekstcontainer met hogere z-index */}
       <Box position="relative" zIndex={1}>
-        <Heading
-          fontSize={{ base: "2xl", sm: "3xl", md: "6xl" }}
-          fontWeight="bold"
-          mb={6}
+    <Heading
+        fontSize={{ base: "2xl", sm: "3xl", md: "6xl" }}
+        fontWeight="bold"
+        mb={6}
+        lineHeight="1.2"
         >
-          Krijg gepersonaliseerd
-          <br />
-          Advies
-        </Heading>
+        <Box as="span" display="block">
+            Krijg gepersonaliseerd
+        </Box>
+        <Box as="span" display="block">
+            Advies
+        </Box>
+    </Heading>
 
         {/* Beschrijving */}
         <Text

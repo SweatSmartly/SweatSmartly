@@ -49,7 +49,11 @@ jobs:
         with:
           name: nextjs-build
 
-      # 9. Deploy to Azure Web App
+      #9. Run Cypress tests
+      - name: Run Cypress tests
+        run: npm run e2e
+
+      # 10. Deploy to Azure Web App
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
