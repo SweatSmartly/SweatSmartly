@@ -1,34 +1,31 @@
-'use client';
+'use client'
 import {
   Box,
+  Flex,
+  VStack,
   Heading,
   Text,
   Button,
-  VStack,
-  Flex,
   useDisclosure,
-} from '@chakra-ui/react';
-import Image from 'next/image';
-import NewsletterModal from './ui/modals/NewsletterModal';
+} from '@chakra-ui/react'
+import Image from 'next/image'
+import NewsletterModal from '@/components/ui/modals/NewsletterModal'
 
 export default function FullBodyFitnessCTA() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+    const { open, onOpen, onClose } = useDisclosure()
 
   return (
     <>
       <Flex
-        direction={{ base: 'column', md: 'row' }}
+        flexDirection={{ base: 'column', md: 'row' }}
         width="100%"
-        height="100vh" // altijd full screen hoogte
+        height="100vh"
         position="relative"
       >
         {/* Afbeelding alleen zichtbaar op desktop */}
         <Box
           position="absolute"
-          top={0}
-          right={0}
-          bottom={0}
-          left={0}
+          inset={0}
           zIndex={0}
           overflow="hidden"
           display={{ base: 'none', md: 'block' }}
@@ -39,7 +36,7 @@ export default function FullBodyFitnessCTA() {
             width={1600}
             height={900}
             style={{
-              objectFit: 'contain',         // volledige afbeelding tonen
+              objectFit: 'contain',
               objectPosition: 'center right',
               width: '100%',
               height: '100%',
@@ -49,8 +46,8 @@ export default function FullBodyFitnessCTA() {
 
         {/* Rode vlak */}
         <Box
-          w={{ base: '100%', md: '50%' }}
-          h={{ base: '100vh', md: 'auto' }} 
+          width={{ base: '100%', md: '50%' }}
+          height={{ base: '100vh', md: 'auto' }}
           bg="red.500"
           color="white"
           display="flex"
@@ -62,18 +59,18 @@ export default function FullBodyFitnessCTA() {
           zIndex={1}
           clipPath={{
             base: 'none',
-            md: 'polygon(0 0, 80% 0, 100% 100%, 0% 100%)', 
+            md: 'polygon(0 0, 80% 0, 100% 100%, 0% 100%)',
           }}
           textAlign="left"
         >
-              <VStack
-                align={{ base: 'center', md: 'start' }}
-                spacing={6}
-                maxW="400px"
-                position="relative"
-                zIndex={2}
-                textAlign={{ base: 'center', md: 'left' }}
-              >
+          <VStack
+            alignItems={{ base: 'center', md: 'start' }}
+            gap={6}
+            maxW="400px"
+            position="relative"
+            zIndex={2}
+            textAlign={{ base: 'center', md: 'left' }}
+          >
             <Heading fontSize="5xl" fontWeight="bold">
               SweatSmartly
             </Heading>
@@ -95,8 +92,10 @@ export default function FullBodyFitnessCTA() {
         </Box>
       </Flex>
 
-      {/* Pop-up modal */}
-      <NewsletterModal isOpen={isOpen} onClose={onClose} />
+      {/* Pop‑up modal */}
+      <NewsletterModal open={open} onClose={onClose} />
+
+
     </>
-  );
+  )
 }

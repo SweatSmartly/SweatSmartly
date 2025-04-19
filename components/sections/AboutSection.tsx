@@ -14,8 +14,6 @@ const AboutSection = () => {
       px={{ base: 4, md: 6 }}
       position="relative"
     >
-      {/* Cirkels achter de heading */}
-      {/* Cirkels achter de heading (alleen zichtbaar op md en groter) */}
       <Box
         display={{ base: "none", md: "block" }}
         position="absolute"
