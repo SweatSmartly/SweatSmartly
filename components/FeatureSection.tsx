@@ -1,6 +1,40 @@
 import { Box, Text, VStack, Heading, Flex } from "@chakra-ui/react";
+import type { FC } from "react";
 
-export default function FeaturesSection() {
+type FeatureBlockProps = {
+  title: string;
+  description: string;
+};
+
+const FeatureBlock: FC<FeatureBlockProps> = ({ title, description }) => {
+  return (
+    <Flex
+      direction={{ base: "column", md: "row" }}
+      align={{ base: "center", md: "flex-start" }}
+      gap={4}
+      textAlign={{ base: "center", md: "left" }}
+    >
+      <Heading
+        as="h3"
+        color="red.400"
+        fontSize={{ base: "lg", md: "2xl" }}
+        fontWeight="bold"
+        maxW={{ base: "100%", md: "250px" }}
+      >
+        {title}
+      </Heading>
+      <Text
+        fontSize={{ base: "sm", md: "md" }}
+        color="white"
+        maxW={{ base: "100%", md: "400px" }}
+      >
+        {description}
+      </Text>
+    </Flex>
+  );
+};
+
+const FeaturesSection: FC = () => {
   return (
     <Box
       minH="100vh"
@@ -49,32 +83,6 @@ export default function FeaturesSection() {
       </VStack>
     </Box>
   );
-}
+};
 
-function FeatureBlock({ title, description }) {
-  return (
-    <Flex
-      direction={{ base: "column", md: "row" }}
-      align={{ base: "center", md: "flex-start" }}
-      gap={4}
-      textAlign={{ base: "center", md: "left" }}
-    >
-      <Heading
-        as="h3"
-        color="red.400"
-        fontSize={{ base: "lg", md: "2xl" }}
-        fontWeight="bold"
-        maxW={{ base: "100%", md: "250px" }}
-      >
-        {title}
-      </Heading>
-      <Text
-        fontSize={{ base: "sm", md: "md" }}
-        color="white"
-        maxW={{ base: "100%", md: "400px" }}
-      >
-        {description}
-      </Text>
-    </Flex>
-  );
-}
+export default FeaturesSection;

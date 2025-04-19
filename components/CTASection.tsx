@@ -1,4 +1,5 @@
 'use client';
+
 import {
   Box,
   Heading,
@@ -9,9 +10,10 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import Image from 'next/image';
+import type { FC } from 'react';
 import NewsletterModal from './ui/modals/NewsletterModal';
 
-export default function FullBodyFitnessCTA() {
+const CTASection: FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -19,7 +21,7 @@ export default function FullBodyFitnessCTA() {
       <Flex
         direction={{ base: 'column', md: 'row' }}
         width="100%"
-        height="100vh" // altijd full screen hoogte
+        height="100vh"
         position="relative"
       >
         {/* Afbeelding alleen zichtbaar op desktop */}
@@ -39,7 +41,7 @@ export default function FullBodyFitnessCTA() {
             width={1600}
             height={900}
             style={{
-              objectFit: 'contain',         
+              objectFit: 'contain',
               objectPosition: 'center right',
               width: '100%',
               height: '100%',
@@ -50,7 +52,7 @@ export default function FullBodyFitnessCTA() {
         {/* Rode vlak */}
         <Box
           w={{ base: '100%', md: '50%' }}
-          h={{ base: '100vh', md: 'auto' }} 
+          h={{ base: '100vh', md: 'auto' }}
           bg="red.500"
           color="white"
           display="flex"
@@ -62,18 +64,18 @@ export default function FullBodyFitnessCTA() {
           zIndex={1}
           clipPath={{
             base: 'none',
-            md: 'polygon(0 0, 80% 0, 100% 100%, 0% 100%)', 
+            md: 'polygon(0 0, 80% 0, 100% 100%, 0% 100%)',
           }}
           textAlign="left"
         >
-              <VStack
-                align={{ base: 'center', md: 'start' }}
-                spacing={6}
-                maxW="400px"
-                position="relative"
-                zIndex={2}
-                textAlign={{ base: 'center', md: 'left' }}
-              >
+          <VStack
+            align={{ base: 'center', md: 'start' }}
+            spacing={6}
+            maxW="400px"
+            position="relative"
+            zIndex={2}
+            textAlign={{ base: 'center', md: 'left' }}
+          >
             <Heading fontSize="5xl" fontWeight="bold">
               SweatSmartly
             </Heading>
@@ -99,4 +101,6 @@ export default function FullBodyFitnessCTA() {
       <NewsletterModal isOpen={isOpen} onClose={onClose} />
     </>
   );
-}
+};
+
+export default CTASection;

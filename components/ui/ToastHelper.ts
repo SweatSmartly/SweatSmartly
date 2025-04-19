@@ -1,4 +1,13 @@
-import { useToast } from '@chakra-ui/react';
+import { useToast, UseToastOptions, ToastPosition } from '@chakra-ui/react';
+
+type ShowToastOptions = {
+  title: string;
+  description?: string;
+  status?: UseToastOptions['status'];
+  duration?: number;
+  position: ToastPosition;
+  isClosable?: boolean;
+};
 
 export const useAppToast = () => {
   const toast = useToast();
@@ -10,7 +19,7 @@ export const useAppToast = () => {
     duration = 4000,
     position,
     isClosable = true,
-  }) => {
+  }: ShowToastOptions) => {
     if (!position) {
       throw new Error('Toast position is required.');
     }

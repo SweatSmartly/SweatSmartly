@@ -1,6 +1,7 @@
 import { Box, Heading, Text, Button, Flex } from "@chakra-ui/react";
+import type { FC } from "react";
 
-const AboutSection = () => {
+const AboutSection: FC = () => {
   return (
     <Box
       bg="red.500"
@@ -14,7 +15,6 @@ const AboutSection = () => {
       px={{ base: 4, md: 6 }}
       position="relative"
     >
-      {/* Cirkels achter de heading */}
       {/* Cirkels achter de heading (alleen zichtbaar op md en groter) */}
       <Box
         display={{ base: "none", md: "block" }}
@@ -54,7 +54,6 @@ const AboutSection = () => {
         />
       </Box>
 
-
       {/* Tekstcontainer met hogere z-index */}
       <Box position="relative" zIndex={1}>
         <Heading
@@ -67,7 +66,6 @@ const AboutSection = () => {
           Advies
         </Heading>
 
-        {/* Beschrijving */}
         <Text
           fontSize={{ base: "md", md: "lg" }}
           maxWidth="800px"
@@ -81,7 +79,6 @@ const AboutSection = () => {
           traditionele personal trainer.
         </Text>
 
-        {/* Knoppen */}
         <Flex
           mt={8}
           gap={4}

@@ -1,6 +1,6 @@
 'use client';
-import React from 'react';
-import { useState } from 'react';
+
+import { useState, ChangeEvent } from 'react';
 import {
   Box,
   Button,
@@ -9,11 +9,11 @@ import {
   VStack,
   Spinner,
 } from '@chakra-ui/react';
-import { useAppToast } from '../../ui/ToastHelper';
+import { useAppToast } from '../ToastHelper';
 
 export default function VideoUpload() {
-  const [file, setFile] = useState(null);
-  const [isUploading, setIsUploading] = useState(false);
+  const [file, setFile] = useState<File | null>(null);
+  const [isUploading, setIsUploading] = useState<boolean>(false);
   const { showToast } = useAppToast();
 
   const handleUpload = async () => {
@@ -25,7 +25,7 @@ export default function VideoUpload() {
       });
       return;
     }
-  
+
     if (file.size > 150 * 1024 * 1024) {
       showToast({
         title: 'Bestand is te groot',
@@ -35,13 +35,13 @@ export default function VideoUpload() {
       });
       return;
     }
-  
+
     setIsUploading(true);
-  
+
     try {
       const sasRes = await fetch('/api/sas');
-      const { uploadUrl, blobName } = await sasRes.json();
-  
+      const { uploadUrl, blobName }: { uploadUrl: string; blobName: string } = await sasRes.json();
+
       const putRes = await fetch(uploadUrl, {
         method: 'PUT',
         headers: {
@@ -50,21 +50,23 @@ export default function VideoUpload() {
         },
         body: file,
       });
-  
-      if (!putRes.ok) throw new Error("Azure upload is mislukt");
-  
+
+      if (!putRes.ok) throw new Error('Azure upload is mislukt');
+
       showToast({
         title: 'Upload gelukt',
         description: `Bestand: ${blobName}`,
         status: 'success',
         position: 'bottom-right',
       });
-  
+
       setFile(null);
     } catch (error) {
+      const message =
+        error instanceof Error ? error.message : 'Onbekende fout';
       showToast({
         title: 'Upload mislukt',
-        description: error.message,
+        description: message,
         status: 'error',
         position: 'bottom-right',
       });
@@ -73,16 +75,21 @@ export default function VideoUpload() {
     }
   };
 
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0] || null;
+    setFile(selectedFile);
+  };
+
   return (
     <Box p={6} borderWidth="1px" borderRadius="xl" boxShadow="md" maxW="md" mx="auto">
       <VStack spacing={4} align="stretch">
         <Text fontSize="lg" fontWeight="bold">Upload een video</Text>
 
         <Input
-          aria-label="Bestand uploaden"  // <-- ✨ Toegevoegd!
+          aria-label="Bestand uploaden"
           type="file"
           accept="video/*"
-          onChange={(e) => setFile(e.target.files[0])}
+          onChange={handleFileChange}
         />
 
         <Button

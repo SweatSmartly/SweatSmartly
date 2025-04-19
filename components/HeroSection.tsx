@@ -1,6 +1,7 @@
 import { Box, Heading, Text } from "@chakra-ui/react";
+import type { FC } from "react";
 
-const HeroSection = () => {
+const HeroSection: FC = () => {
   return (
     <Box
       bgImage="url('/hero-image.png')"
@@ -11,7 +12,6 @@ const HeroSection = () => {
       minHeight="100vh"
       width="100%"
     >
-      {/* Hero Tekst */}
       <Box
         position="absolute"
         bottom={{ base: "auto", md: 10 }}
